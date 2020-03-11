@@ -83,7 +83,7 @@ def eeschema_plot_schematic(output_directory, file_format, all_pages):
         raise ValueError("file_format should be 'pdf' or 'svg'")
 
     clipboard_store(output_dir)
-
+    xdotool(['key', 'Return'])
     dismiss_library_warning()
     dismiss_heirachical_sheet_not_found_warning()
     dismiss_library_warning()
