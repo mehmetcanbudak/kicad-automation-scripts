@@ -59,6 +59,16 @@ def dismiss_library_warning():
     except RuntimeError:
         pass
 
+
+def dismiss_heirachical_sheet_not_found_warning():
+    try:
+        logger.info('dismiss_heirachical_sheet_not_found_warning')
+        wait_for_window('schematic ', 'Error', 3)
+
+        xdotool(['key', 'Return'])
+    except RuntimeError:
+        pass
+
 def dismiss_newer_version():
     try:
         logger.info('Dismiss schematic version notification')
@@ -74,6 +84,8 @@ def eeschema_plot_schematic(output_directory, file_format, all_pages):
 
     clipboard_store(output_dir)
 
+    dismiss_library_warning()
+    dismiss_heirachical_sheet_not_found_warning()
     dismiss_library_warning()
     # dismiss_newer_version()
 
@@ -221,6 +233,7 @@ def eeschema_run_erc(schematic, output_dir, warning_as_error, generate_junit_xml
     with recorded_xvfb(screencast_output_file, width=800, height=600, colordepth=24):
         with PopenContext(['eeschema', schematic], close_fds=True) as eeschema_proc:
             dismiss_library_warning()
+            dismiss_heirachical_sheet_not_found_warning()
             # dismiss_newer_version()
 
             logger.info('Focus main eeschema window')
