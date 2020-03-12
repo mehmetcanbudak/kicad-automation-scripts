@@ -84,7 +84,7 @@ def dismiss_configure_global_symbol_upgrade():
 
         logger.info('Dismiss Configure Global Symbol Library Table')
         xdotool(['search', '--name', nf_title, 'windowfocus'])
-        xdotool(['key', 'Return'])
+        xdotool(['key', 'Down', 'Return'])
     except RuntimeError:
         pass
 
