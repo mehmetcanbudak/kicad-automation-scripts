@@ -22,6 +22,7 @@ import sys
 import time
 import re
 import argparse
+import time
 
 from contextlib import contextmanager
 from junit_xml import TestSuite, TestCase
@@ -83,6 +84,11 @@ def eeschema_plot_schematic(output_directory, file_format, all_pages):
         raise ValueError("file_format should be 'pdf' or 'svg'")
 
     clipboard_store(output_dir)
+
+    xdotool(['search', '--any', '', 'windowfocus'])
+    xdotool(['key', 'Return'])
+
+
     dismiss_newer_version()
     dismiss_library_warning()
     dismiss_heirachical_sheet_not_found_warning()
@@ -95,7 +101,8 @@ def eeschema_plot_schematic(output_directory, file_format, all_pages):
     xdotool(['search', '--name', '\[', 'windowfocus'])
 
     logger.info('Open File->Plot')
-    xdotool(['key', 'alt+f', 'l'])
+    xdotool(['key', 'alt+f'])
+    xdotool(['key', 'Up', 'Up','KP_Enter'])
 
     wait_for_window('plot', 'Plot')
 
@@ -157,6 +164,7 @@ def eeschema_export_schematic(schematic, output_dir, file_format="svg", all_page
     with recorded_xvfb(screencast_output_file, width=800, height=600, colordepth=24):
         with PopenContext(['eeschema', schematic], close_fds=True) as eeschema_proc:
             eeschema_plot_schematic(output_dir, file_format, all_pages)
+            time.sleep(20)
             file_util.wait_for_file_created_by_process(eeschema_proc.pid, output_file)
             eeschema_proc.terminate()
 
