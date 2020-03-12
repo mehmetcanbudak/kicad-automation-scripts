@@ -4,7 +4,7 @@ LABEL Description="Base image with all dependencies and environment for KiCad au
 
 COPY src/requirements.txt .
 RUN apt-get -y update && \
-    apt-get install -y python2.7 python-pip xvfb recordmydesktop xdotool xclip && \
+    apt-get install -y python2.7 python-pip xvfb recordmydesktop xdotool xclip tree && \
     pip2 install -r requirements.txt && \
     rm requirements.txt && \
     apt-get -y remove python-pip && \
