@@ -74,6 +74,20 @@ def dismiss_configure_global_footprint_upgrade():
     except RuntimeError:
         pass
 
+def dismiss_configure_global_symbol_upgrade():
+    # The "Not Found" window pops up if libraries required by the schematic have
+    # not been found. This can be ignored as all symbols are placed inside the
+    # *-cache.lib file:
+    try:
+        nf_title = 'Configure Global Symbol Library Table'
+        wait_for_window(nf_title, nf_title, 3)
+
+        logger.info('Dismiss Configure Global Symbol Library Table')
+        xdotool(['search', '--name', nf_title, 'windowfocus'])
+        xdotool(['key', 'Return'])
+    except RuntimeError:
+        pass
+
 def dismiss_heirachical_sheet_not_found_warning():
     try:
         logger.info('dismiss_heirachical_sheet_not_found_warning')
@@ -97,7 +111,7 @@ def eeschema_plot_schematic(output_directory, file_format, all_pages):
         raise ValueError("file_format should be 'pdf' or 'svg'")
 
     clipboard_store(output_dir)
-
+    dismiss_configure_global_symbol_upgrade();
     dismiss_configure_global_footprint_upgrade();
 
     dismiss_newer_version()
