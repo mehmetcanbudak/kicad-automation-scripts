@@ -17,5 +17,5 @@ ENV LANG C.UTF-8
 
 # Copy default configuration and fp_lib_table to prevent first run dialog
 COPY ./config/* /root/.config/kicad/
-COPY __init__.py /usr/lib/python2.7/dist-packages/kicad-automation
+COPY __init__.py /usr/lib/python2.7/dist-packages/kicad-automation/
 COPY src /usr/lib/python2.7/dist-packages/kicad-automation
