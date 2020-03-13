@@ -37,7 +37,19 @@ from ui_automation import (
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
+def dismiss_configure_global_footprint_upgrade():
+    try:
+        nf_title = 'Configure Global Footprint Library Table'
+        wait_for_window(nf_title, nf_title, 3)
+
+        logger.info('Dismiss Configure Global Footprint Library Table')
+        xdotool(['search', '--name', nf_title, 'windowfocus'])
+        xdotool(['key', 'Down', 'Return'])
+    except RuntimeError:
+        pass
+
 def eeschema_export_bom(output_directory):
+    dismiss_configure_global_footprint_upgrade()
     wait_for_window('eeschema', '\[')
 
     logger.info('Focus main eeschema window')

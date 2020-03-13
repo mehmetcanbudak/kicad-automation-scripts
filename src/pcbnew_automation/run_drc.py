@@ -69,6 +69,16 @@ def parse_drc(drc_file):
         'unconnected_pads': int(unconnected_pads)
     }
 
+def dismiss_configure_global_footprint_upgrade():
+    try:
+        nf_title = 'Configure Global Footprint Library Table'
+        wait_for_window(nf_title, nf_title, 3)
+
+        logger.info('Dismiss Configure Global Footprint Library Table')
+        xdotool(['search', '--name', nf_title, 'windowfocus'])
+        xdotool(['key', 'Down', 'Return'])
+    except RuntimeError:
+        pass
 
 def run_drc(pcb_file, output_dir, record=True):
 
@@ -87,6 +97,7 @@ def run_drc(pcb_file, output_dir, record=True):
         with PopenContext(['pcbnew', pcb_file], close_fds=True) as pcbnew_proc:
             clipboard_store(drc_output_file)
 
+            dismiss_configure_global_footprint_upgrade()
             window = wait_for_window('pcbnew', 'Pcbnew', 10, False)
 
             logger.info('Focus main pcbnew window')
