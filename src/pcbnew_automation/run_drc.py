@@ -80,6 +80,17 @@ def dismiss_configure_global_footprint_upgrade():
     except RuntimeError:
         pass
 
+def dismiss_enable_graphics_acceleration():
+    try:
+        nf_title = 'Enable Graphics Acceleration'
+        wait_for_window(nf_title, nf_title, 3)
+
+        logger.info('Enable Graphics Acceleration')
+        xdotool(['search', '--name', nf_title, 'windowfocus'])
+        xdotool(['key', 'Escape'])
+    except RuntimeError:
+        pass
+
 def run_drc(pcb_file, output_dir, record=True):
 
     file_util.mkdir_p(output_dir)
@@ -98,6 +109,7 @@ def run_drc(pcb_file, output_dir, record=True):
             clipboard_store(drc_output_file)
 
             dismiss_configure_global_footprint_upgrade()
+            dismiss_enable_graphics_acceleration()
             window = wait_for_window('pcbnew', 'Pcbnew', 10, False)
 
             logger.info('Focus main pcbnew window')
@@ -109,7 +121,7 @@ def run_drc(pcb_file, output_dir, record=True):
             wait_for_window('pcbnew', 'Pcbnew')
 
             logger.info('Open Inspect->DRC')
-            xdotool(['key', 'alt+i', 'd'])
+            xdotool(['key', 'alt+i', 'Up', 'KP_Enter'])
 
             logger.info('Focus DRC modal window')
             wait_for_window('DRC modal window', 'DRC Control')
@@ -117,19 +129,24 @@ def run_drc(pcb_file, output_dir, record=True):
                 'Tab',
                 'Tab',
                 'Tab', # Refill zones on DRC gets saved in /root/.config/kicad/pcbnew as RefillZonesBeforeDrc
-                'key',
+                'space',
                 'Tab',
                 'space', # Enable reporting all errors for tracks
                 'Tab',
-                'Tab',
+                'space',
                 'Tab',
                 'space',
-                'Tab'
+                'Tab', 
+                'Tab', 
+                'space'
             ])
             logger.info('Pasting output dir')
             xdotool(['key', 'ctrl+v'])
 
             xdotool(['key', 'Return'])
+
+            wait_for_window('Zone fills are out-of-date. Refill?', 'Confirmation')
+            xdotool(['key', 'Down', 'KP_Enter'])
 
             wait_for_window('Report completed dialog', 'Disk File Report Completed')
             xdotool(['key', 'Return'])
