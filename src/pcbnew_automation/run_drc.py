@@ -22,6 +22,7 @@ import sys
 import os
 import logging
 import argparse
+import time
 from xvfbwrapper import Xvfb
 
 pcbnew_dir = os.path.dirname(os.path.abspath(__file__))
@@ -99,8 +100,8 @@ def run_drc(pcb_file, output_dir, record=True):
     drc_output_file = os.path.join(os.path.abspath(output_dir), 'drc_result.rpt')
 
     xvfb_kwargs = {
-	    'width': 800,
-	    'height': 600,
+	    'width': 1024,
+	    'height': 786,
 	    'colordepth': 24,
     }
 
@@ -116,7 +117,7 @@ def run_drc(pcb_file, output_dir, record=True):
             wait_for_window('pcbnew', 'Pcbnew')
 
             # Needed to rebuild the menu, making sure it is actually built
-            xdotool(['windowsize', '--sync', window, '750', '600'])
+            xdotool(['windowsize', '--sync', window, '1024', '786'])
 
             wait_for_window('pcbnew', 'Pcbnew')
 
@@ -125,31 +126,44 @@ def run_drc(pcb_file, output_dir, record=True):
 
             logger.info('Focus DRC modal window')
             wait_for_window('DRC modal window', 'DRC Control')
+
+            logger.info('first..')
             xdotool(['key',
                 'Tab',
                 'Tab',
-                'Tab', # Refill zones on DRC gets saved in /root/.config/kicad/pcbnew as RefillZonesBeforeDrc
-                'space',
                 'Tab',
-                'space', # Enable reporting all errors for tracks
                 'Tab',
                 'space',
                 'Tab',
                 'space',
-                'Tab', 
-                'Tab', 
-                'space'
-            ])
+                'Tab',
+                'space',
+                'Tab',
+                'space',              
+                'Tab',  
+            ]);
+            time.sleep(2)
+            
             logger.info('Pasting output dir')
             xdotool(['key', 'ctrl+v'])
+            time.sleep(2)
 
+            logger.info('return + sleep')
+            xdotool(['key', 'Return'])
+            time.sleep(2)
+
+            logger.info('return')
+            xdotool(['key', 'Return'])
+            
+            time.sleep(2)
+            logger.info('return')
             xdotool(['key', 'Return'])
 
-            wait_for_window('Zone fills are out-of-date. Refill?', 'Confirmation')
-            xdotool(['key', 'Down', 'KP_Enter'])
+            #wait_for_window('Zone fills are out-of-date. Refill?', 'Confirmation')
+            #xdotool(['key', 'Down', 'KP_Enter'])
 
             wait_for_window('Report completed dialog', 'Disk File Report Completed')
-            xdotool(['key', 'Return'])
+            xdotool(['key', 'Return']) 
             pcbnew_proc.terminate()
 
     return drc_output_file
