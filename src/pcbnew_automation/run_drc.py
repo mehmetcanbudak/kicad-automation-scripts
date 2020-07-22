@@ -77,7 +77,7 @@ def dismiss_configure_global_footprint_upgrade():
 
         logger.info('Dismiss Configure Global Footprint Library Table')
         xdotool(['search', '--name', nf_title, 'windowfocus'])
-        xdotool(['key', 'Down', 'Return'])
+        xdotool(['key', 'Return'])
     except RuntimeError:
         pass
 
