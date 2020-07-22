@@ -144,22 +144,14 @@ def run_drc(pcb_file, output_dir, record=True):
                 'space',              
                 'Tab',  
             ]);
-            time.sleep(2)
+            #time.sleep(2)
             
             logger.info('Pasting output dir')
             xdotool(['key', 'ctrl+v'])
-            time.sleep(2)
 
             logger.info('return + sleep')
             xdotool(['key', 'Return'])
-            time.sleep(2)
-
-            logger.info('return')
-            xdotool(['key', 'Return'])
-            
-            time.sleep(2)
-            logger.info('return')
-            xdotool(['key', 'Return'])
+            #time.sleep(1)
 
             wait_for_window('Zone fills are out-of-date. Refill?', 'Confirmation')
             xdotool(['key', 'Down', 'KP_Enter'])
