@@ -63,6 +63,9 @@ def recorded_xvfb(video_filename, **xvfb_args):
             screencast_proc.terminate()
 
 
+def xwininfo(command):
+    return subprocess.check_output(['xwininfo'] + command)
+
 def xdotool(command):
     return subprocess.check_output(['xdotool'] + command)
 

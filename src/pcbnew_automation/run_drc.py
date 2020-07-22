@@ -34,6 +34,7 @@ from util import file_util
 from util.ui_automation import (
     PopenContext,
     xdotool,
+    xwininfo,
     wait_for_window,
     recorded_xvfb,
     clipboard_store
@@ -72,12 +73,12 @@ def parse_drc(drc_file):
 
 def dismiss_configure_global_footprint_upgrade():
     try:
-        nf_title = 'Configure Global Footprint Library Table'
+        nf_title = 'Info'
         wait_for_window(nf_title, nf_title, 3)
 
         logger.info('Dismiss Configure Global Footprint Library Table')
         xdotool(['search', '--name', nf_title, 'windowfocus'])
-        xdotool(['key', 'Return'])
+        xdotool(['key', 'Down', 'Return'])
     except RuntimeError:
         pass
 
@@ -111,8 +112,9 @@ def run_drc(pcb_file, output_dir, record=True):
 
             dismiss_configure_global_footprint_upgrade()
             dismiss_enable_graphics_acceleration()
+            logger.info(xwininfo(['-root', '-tree']))
             window = wait_for_window('pcbnew', 'Pcbnew', 10, False)
-
+            logger.info(xwininfo(['-root', '-tree']))
             logger.info('Focus main pcbnew window')
             wait_for_window('pcbnew', 'Pcbnew')
 
@@ -159,8 +161,8 @@ def run_drc(pcb_file, output_dir, record=True):
             logger.info('return')
             xdotool(['key', 'Return'])
 
-            #wait_for_window('Zone fills are out-of-date. Refill?', 'Confirmation')
-            #xdotool(['key', 'Down', 'KP_Enter'])
+            wait_for_window('Zone fills are out-of-date. Refill?', 'Confirmation')
+            xdotool(['key', 'Down', 'KP_Enter'])
 
             wait_for_window('Report completed dialog', 'Disk File Report Completed')
             xdotool(['key', 'Return']) 
