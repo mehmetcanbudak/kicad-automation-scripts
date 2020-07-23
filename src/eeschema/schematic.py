@@ -36,6 +36,7 @@ from util import file_util
 from util.ui_automation import (
     PopenContext,
     xdotool,
+    xwininfo,
     wait_for_window,
     recorded_xvfb,
     clipboard_store,
@@ -265,10 +266,11 @@ def eeschema_run_erc(schematic, output_dir, warning_as_error, generate_junit_xml
 
     with recorded_xvfb(screencast_output_file, width=800, height=600, colordepth=24):
         with PopenContext(['eeschema', schematic], close_fds=True) as eeschema_proc:
+            dismiss_configure_global_symbol_upgrade()
             dismiss_library_warning()
             dismiss_heirachical_sheet_not_found_warning()
             # dismiss_newer_version()
-
+            logger.info(xwininfo(['-root', '-tree']))
             logger.info('Focus main eeschema window')
             wait_for_window('eeschema', '\[')
 
