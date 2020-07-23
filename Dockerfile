@@ -1,7 +1,7 @@
 #FROM productize/kicad:5.0.1-18.04
-FROM productize/kicad:5.1-18.10
-MAINTAINER Seppe Stas <seppe@productize.be>
-LABEL Description="Base image with all dependencies and environment for KiCad automation scripts"
+FROM nicnewdigate/docker-kicad:latest
+MAINTAINER Nic Newdigate <nicnewdigate@gmail.com>
+LABEL Description="Base image with all dependencies and environment for KiCad automation scripts based on  Seppe Stas's https://hub.docker.com/r/productize/kicad"
 
 COPY src/requirements.txt .
 RUN apt-get -y update && \
