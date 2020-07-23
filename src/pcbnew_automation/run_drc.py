@@ -73,7 +73,7 @@ def parse_drc(drc_file):
 
 def dismiss_configure_global_footprint_upgrade():
     try:
-        nf_title = 'Info'
+        nf_title = 'Configure Global Footprint Library'
         wait_for_window(nf_title, nf_title, 3)
 
         logger.info('Dismiss Configure Global Footprint Library Table')
@@ -112,9 +112,9 @@ def run_drc(pcb_file, output_dir, record=True):
 
             dismiss_configure_global_footprint_upgrade()
             dismiss_enable_graphics_acceleration()
-            logger.info(xwininfo(['-root', '-tree']))
+            #logger.info(xwininfo(['-root', '-tree']))
             window = wait_for_window('pcbnew', 'Pcbnew', 10, False)
-            logger.info(xwininfo(['-root', '-tree']))
+
             logger.info('Focus main pcbnew window')
             wait_for_window('pcbnew', 'Pcbnew')
 
@@ -127,8 +127,9 @@ def run_drc(pcb_file, output_dir, record=True):
             xdotool(['key', 'alt+i', 'Up', 'KP_Enter'])
 
             logger.info('Focus DRC modal window')
-            wait_for_window('DRC modal window', 'DRC Control')
 
+            wait_for_window('DRC modal window', 'DRC Control')
+            xdotool(['search', '--name', 'DRC Control', 'windowfocus'])
             logger.info('first..')
             xdotool(['key',
                 'Tab',
@@ -141,11 +142,9 @@ def run_drc(pcb_file, output_dir, record=True):
                 'Tab',
                 'space',
                 'Tab',
-                'space',              
-                'Tab',  
+                'space',
             ]);
-            #time.sleep(2)
-            
+
             logger.info('Pasting output dir')
             xdotool(['key', 'ctrl+v'])
 
@@ -153,8 +152,8 @@ def run_drc(pcb_file, output_dir, record=True):
             xdotool(['key', 'Return'])
             #time.sleep(1)
 
-            wait_for_window('Zone fills are out-of-date. Refill?', 'Confirmation')
-            xdotool(['key', 'Down', 'KP_Enter'])
+            #wait_for_window('Zone fills are out-of-date. Refill?', 'Confirmation')
+            #xdotool(['key', 'Down', 'KP_Enter'])
 
             wait_for_window('Report completed dialog', 'Disk File Report Completed')
             xdotool(['key', 'Return']) 
