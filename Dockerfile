@@ -20,3 +20,5 @@ ENV LANG C.UTF-8
 COPY ./config/* /root/.config/kicad/
 COPY __init__.py /usr/lib/python2.7/dist-packages/kicad-automation/
 COPY src /usr/lib/python2.7/dist-packages/kicad-automation
+COPY __init__.py /usr/lib/python3.6/dist-packages/kicad-automation/
+COPY src /usr/lib/python3.6/dist-packages/kicad-automation
