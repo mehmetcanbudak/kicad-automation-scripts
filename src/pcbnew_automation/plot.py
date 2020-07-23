@@ -72,11 +72,11 @@ def plot_to_directory(pcb, file_format, layers, plot_directory, temp_dir):
             output_filename = layer.plot(pcbnew.PLOT_FORMAT_PDF)
             output_files.append(output_filename)
             logger.debug(output_filename)
-            merger.append(PdfFileReader(file(output_filename, 'rb')), bookmark=layer.get_name())
+            merger.append(PdfFileReader(output_filename), bookmark=layer.get_name())
 
         drill_map_file = pcb.plot_drill_map()
         if os.path.isfile(drill_map_file): # No drill map file is generated if no holes exist
-            merger.append(PdfFileReader(file(drill_map_file, 'rb')), bookmark='Drill map')
+            merger.append(PdfFileReader(drill_map_file), bookmark='Drill map')
 
         merger.write(plot_directory+'/{}.pdf'.format(pcb.name))
 
