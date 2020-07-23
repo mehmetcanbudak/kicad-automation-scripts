@@ -1,4 +1,5 @@
-FROM productize/kicad:5.0.1-18.04
+#FROM productize/kicad:5.0.1-18.04
+FROM productize/kicad:5.1-18.10
 MAINTAINER Seppe Stas <seppe@productize.be>
 LABEL Description="Base image with all dependencies and environment for KiCad automation scripts"
 
