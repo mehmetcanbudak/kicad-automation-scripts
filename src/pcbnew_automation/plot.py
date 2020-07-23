@@ -24,7 +24,7 @@ import zipfile
 from PyPDF2 import PdfFileMerger, PdfFileReader
 from collections import namedtuple
 
-import pcb_util
+from kicad_automation.pcbnew_automation import pcb_util
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
