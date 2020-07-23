@@ -7,6 +7,7 @@ COPY src/requirements.txt .
 RUN apt-get -y update && \
     apt-get install -y python2.7 python-pip xvfb recordmydesktop xdotool xclip tree x11-utils && \
     pip2 install -r requirements.txt && \
+    pip install -r requirements.txt && \
     rm requirements.txt && \
     apt-get -y remove python-pip && \
     rm -rf /var/lib/apt/lists/*
