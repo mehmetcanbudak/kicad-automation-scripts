@@ -83,7 +83,7 @@ def clipboard_retrieve():
         output += line.decode()
     return output;
 
-def wait_for_window(name, window_regex, timeout=10, focus=True):
+def wait_for_window(name, window_regex, timeout=10, focus=True, raiseError=True):
     DELAY = 0.5
     logger.info('Waiting for %s window...', name)
     xdotool_command = ['search', '--onlyvisible', '--name', window_regex]
@@ -99,4 +99,5 @@ def wait_for_window(name, window_regex, timeout=10, focus=True):
         except subprocess.CalledProcessError:
             pass
         time.sleep(DELAY)
-    raise RuntimeError('Timed out waiting for %s window' % name)
+    if (raiseError):
+        raise RuntimeError('Timed out waiting for %s window' % name)
