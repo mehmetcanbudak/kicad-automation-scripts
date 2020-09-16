@@ -155,7 +155,7 @@ def run_drc(pcb_file, output_dir, record=True):
             wait_for_window('Zone fills are out-of-date. Refill?', 'Confirmation', 10, True, False)
             xdotool(['key', 'Down', 'KP_Enter'])
 
-            wait_for_window('Report completed dialog', 'Disk File Report Completed')
+            wait_for_window('Report completed dialog', 'Disk File Report Completed', 10, True, False)
             xdotool(['key', 'Return']) 
             pcbnew_proc.terminate()
 
